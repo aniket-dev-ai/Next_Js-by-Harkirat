@@ -1,18 +1,29 @@
-// This is a React component for displaying group details,
-// including group balances, members, expenses, and settlements,
-// using Shadcn UI components.
-// It uses dummy data and lucide-react for icons.
+"use client";
+
+import { useState } from "react"; // Import useState hook
 
 import { Button } from "@/components/ui/button"; // Shadcn UI Button
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"; // Shadcn UI Card components
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"; // Shadcn UI Avatar components
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Shadcn UI Tabs components
 import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog"; // Shadcn UI Dialog components
+import { Input } from "@/components/ui/input"; // Shadcn UI Input
+import { Textarea } from "@/components/ui/textarea"; // Shadcn UI Textarea
+import { Badge } from "@/components/ui/badge"; // Shadcn UI Badge for members
+import {
   ArrowLeft,
   Users,
+  User,
   DollarSign,
   PlusCircle,
   CircleDollarSign,
+  X,
 } from "lucide-react"; // Icons from lucide-react
 
 // Define interfaces for dummy data
@@ -165,6 +176,79 @@ const getMemberName = (userId: string, members: Member[]) => {
 
 // React component for the Group Detail View page
 export default function GroupDetailPage() {
+  const [isCreateGroupDialogOpen, setIsCreateGroupDialogOpen] = useState(false); // State for dialog visibility
+
+  // Dummy state for the new group form (for demonstration)
+  const [newGroupData, setNewGroupData] = useState({
+    name: "",
+    description: "",
+    members: [
+      {
+        id: "you",
+        name: "Piyush Agarwal (You)",
+        avatarUrl: "https://api.dicebear.com/7.x/initials/svg?seed=You",
+      }, // Current user is automatically a member
+      {
+        id: "roadside-coder",
+        name: "Roadside Coder",
+        avatarUrl: "https://api.dicebear.com/7.x/initials/svg?seed=RC",
+      }, // Dummy initial member
+    ],
+  });
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setNewGroupData({ ...newGroupData, [name]: value });
+  };
+
+  const handleAddMember = () => {
+    // In a real application, this would open a dialog/search for members
+    // For dummy data, we'll just add a placeholder member
+    const newMemberId = `dummy-member-${newGroupData.members.length + 1}`;
+    const newMember = {
+      id: newMemberId,
+      name: `Dummy Member ${newGroupData.members.length + 1}`,
+      avatarUrl: `https://api.dicebear.com/7.x/initials/svg?seed=DM${
+        newGroupData.members.length + 1
+      }`,
+    };
+    setNewGroupData({
+      ...newGroupData,
+      members: [...newGroupData.members, newMember],
+    });
+  };
+
+  const handleRemoveMember = (memberId: string) => {
+    // Prevent removing the current user ('you')
+    if (memberId === "you") {
+      return;
+    }
+    setNewGroupData({
+      ...newGroupData,
+      members: newGroupData.members.filter((member) => member.id !== memberId),
+    });
+  };
+
+  const handleCreateGroup = () => {
+    // In a real application, you would send newGroupData to your backend
+    console.log("Creating group with data:", newGroupData);
+    // Reset form and close dialog
+    setNewGroupData({
+      name: "",
+      description: "",
+      members: [
+        {
+          id: "you",
+          name: "Piyush Agarwal (You)",
+          avatarUrl: "https://api.dicebear.com/7.x/initials/svg?seed=You",
+        },
+      ],
+    }); // Reset with only current user
+    setIsCreateGroupDialogOpen(false);
+  };
+
   const yourBalance =
     dummyGroupBalances.find((b) => b.userId === "you")?.amount || 0;
   const owedToYou = dummyGroupBalances.filter((b) => b.amount < 0); // Negative amount means they owe you
@@ -194,6 +278,8 @@ export default function GroupDetailPage() {
           <Button>
             <PlusCircle className="mr-2 h-4 w-4" /> Add expense
           </Button>
+          {/* Button to open the Create New Group Dialog */}
+          
         </div>
       </div>
 
@@ -358,6 +444,102 @@ export default function GroupDetailPage() {
           </div>
         </TabsContent>
       </Tabs>
+
+      {/* Create New Group Dialog */}
+      <Dialog
+        open={isCreateGroupDialogOpen}
+        onOpenChange={setIsCreateGroupDialogOpen}
+      >
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create New Group</DialogTitle>
+            {/* Close button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-4 right-4"
+              onClick={() => setIsCreateGroupDialogOpen(false)}
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            {/* Group Name Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="name" className="text-right">
+                Group Name
+              </label>
+              <Input
+                id="name"
+                name="name"
+                value={newGroupData.name}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Test Group"
+              />
+            </div>
+            {/* Description Input */}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <label htmlFor="description" className="text-right">
+                Description (Optional)
+              </label>
+              <Textarea
+                id="description"
+                name="description"
+                value={newGroupData.description}
+                onChange={handleInputChange}
+                className="col-span-3"
+                placeholder="Expenses for our weekend getaway"
+              />
+            </div>
+            {/* Members Section */}
+            <div className="grid grid-cols-4 items-start gap-4">
+              <label className="text-right">Members</label>
+              <div className="col-span-3 space-y-2">
+                {/* Display selected members */}
+                <div className="flex flex-wrap gap-2">
+                  {newGroupData.members.map((member) => (
+                    <Badge
+                      key={member.id}
+                      variant="secondary"
+                      className="flex items-center"
+                    >
+                      <Avatar className="h-5 w-5 mr-1">
+                        <AvatarImage src={member.avatarUrl} alt={member.name} />
+                        <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      {member.name}
+                      {member.id !== "you" && ( // Prevent removing the current user
+                        <X
+                          className="ml-1 h-3 w-3 cursor-pointer"
+                          onClick={() => handleRemoveMember(member.id)}
+                        />
+                      )}
+                    </Badge>
+                  ))}
+                </div>
+                {/* Button to add member */}
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleAddMember}
+                >
+                  <User className="mr-2 h-4 w-4" /> Add member
+                </Button>
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsCreateGroupDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button onClick={handleCreateGroup}>Create Group</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
