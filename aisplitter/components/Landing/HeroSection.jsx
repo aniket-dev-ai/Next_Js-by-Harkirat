@@ -9,7 +9,7 @@ const HeroSection = () => {
       <p className="p-1 border m-auto px-3  border-accent-foreground text-xs rounded-3xl">
         Split Expenses. Simple life
       </p>
-      <h1 className="text-8xl font-extrabold text-center">
+      <h1 className="text-8xl text-green-800 dark:text-green-400 font-extrabold text-center">
         The Smartest Way to Split Expenses with Friends
       </h1>
       <p className="text-center text-sm font-light mt-4">
