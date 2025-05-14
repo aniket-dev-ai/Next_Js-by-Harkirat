@@ -38,6 +38,7 @@ export default function RootLayout({
         >
           <ClerkProvider>
             <NavBar />
+            <div className="mt-20"></div>
             {children}
           </ClerkProvider>
         </ThemeProvider>

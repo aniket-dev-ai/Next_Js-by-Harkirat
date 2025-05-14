@@ -5,14 +5,20 @@ import { ModeToggle } from "./ModeToggle";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
-import { UserButton, SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import {
+  UserButton,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+} from "@clerk/nextjs";
 import Link from "next/link";
 
 const NavBar = () => {
   return (
     <div className="flex items-center justify-between w-full px-6 py-4 border-b bg-background/80 backdrop-blur-md z-50 fixed top-0 left-0 right-0">
       {/* Logo */}
-      <div className="text-xl font-bold text-primary">Ai Expense Splitter</div>
+      <Link href="/" className="text-xl font-bold text-primary">Ai Expense Splitter</Link>
 
       {/* Desktop Nav */}
       <div className="hidden md:flex  gap-6">
@@ -27,15 +33,20 @@ const NavBar = () => {
       {/* Desktop Auth + Mode */}
       <div className="hidden md:flex gap-4 items-center">
         <SignedOut>
-          <SignInButton >
+          <SignInButton>
             <Button variant="outline">Sign In</Button>
           </SignInButton>
-          <SignUpButton >
+          <SignUpButton>
             <Button variant="default">Sign Up</Button>
           </SignUpButton>
         </SignedOut>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
+          <Link href="/dashboard">
+            <Button  className="justify-start rounded-lg hover:bg-green-200 dark:hover:bg-green-900/60 transition ">
+              <span >DashBoard</span>
+            </Button>
+          </Link>
         </SignedIn>
         <ModeToggle />
       </div>
@@ -70,20 +81,21 @@ const NavBar = () => {
               </div>
               <div className="flex flex-col gap-3 w-full mt-6">
                 <SignedOut>
-                  <Link href="/sign-in" className="w-[85%] m-auto">
+                  <SignInButton>
                     <Button variant="outline" className="w-full">
                       Sign In
                     </Button>
-                  </Link>
-                  <Link href="/sign-up" className="w-[85%] m-auto">
+                  </SignInButton>
+                  <SignUpButton>
                     <Button variant="default" className="w-full">
                       Sign Up
                     </Button>
-                  </Link>
+                  </SignUpButton>
                 </SignedOut>
                 <SignedIn>
-                  <div className="flex justify-center">
+                  <div className="flex flex-col items-center gap-2 justify-center">
                     <UserButton afterSignOutUrl="/" />
+                    <Button className="">DashBoard</Button>
                   </div>
                 </SignedIn>
               </div>
