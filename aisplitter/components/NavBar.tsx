@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { ModeToggle } from "./ModeToggle";
 import { Button } from "./ui/button";
@@ -20,43 +22,32 @@ const NavBar = () => {
         </h1>
       </div>
 
-      {/* Desktop Auth Buttons */}
-      <div className="hidden md:flex gap-4">
-        <Button variant="outline" className="border-accent-foreground">
-          SignIn
-        </Button>
-        <Button variant="outline" className="border-accent-foreground">
-          SignUp
-        </Button>
+      {/* Desktop Auth + Mode */}
+      <div className="hidden md:flex gap-4 items-center">
+        <Button variant="outline">SignIn</Button>
+        <Button variant="outline">SignUp</Button>
         <ModeToggle />
       </div>
 
-      {/* Mobile Sidebar */}
-      <div className="md:hidden flex items-center">
+      {/* Mobile - Sidebar */}
+      <div className="md:hidden flex items-center gap-2">
         <ModeToggle />
-
         <Sheet>
-          <SheetTrigger>
-            <Button variant="ghost">
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon">
               <MenuIcon />
             </Button>
           </SheetTrigger>
           <SheetContent side="left">
-            <div className="flex flex-col items-center gap-4 mt-6">
+            <div className="flex flex-col gap-6 mt-10 text-center">
               <h1 className="hover:text-green-600 cursor-pointer">
                 Get Started
               </h1>
               <h1 className="hover:text-green-600 cursor-pointer">
                 How It Works?
               </h1>
-              <div className="flex  gap-4 mt-6">
-                <Button variant="outline" className="border-accent-foreground">
-                  SignIn
-                </Button>
-                <Button variant="outline" className="border-accent-foreground">
-                  SignUp
-                </Button>
-              </div>
+              <Button variant="outline">SignIn</Button>
+              <Button variant="outline">SignUp</Button>
             </div>
           </SheetContent>
         </Sheet>
