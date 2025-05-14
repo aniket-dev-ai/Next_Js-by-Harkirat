@@ -32,11 +32,7 @@ interface Group {
 }
 
 // Interface for members within the new group dialog state
-interface Member {
-  id: string;
-  name: string;
-  avatarUrl?: string;
-}
+
 
 // Dummy data for display
 const dummyPeople: Person[] = [
