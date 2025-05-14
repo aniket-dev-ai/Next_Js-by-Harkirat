@@ -5,7 +5,7 @@ import { ModeToggle } from "./ModeToggle";
 import { Button } from "./ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
 import { MenuIcon } from "lucide-react";
-import { UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { UserButton, SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -15,7 +15,7 @@ const NavBar = () => {
       <div className="text-xl font-bold text-primary">Ai Expense Splitter</div>
 
       {/* Desktop Nav */}
-      <div className="hidden md:flex ml-16 gap-6">
+      <div className="hidden md:flex  gap-6">
         <h1 className="hover:text-green-600 cursor-pointer transition">
           Get Started
         </h1>
@@ -27,12 +27,12 @@ const NavBar = () => {
       {/* Desktop Auth + Mode */}
       <div className="hidden md:flex gap-4 items-center">
         <SignedOut>
-          <Link href="/sign-in">
+          <SignInButton >
             <Button variant="outline">Sign In</Button>
-          </Link>
-          <Link href="/sign-up">
+          </SignInButton>
+          <SignUpButton >
             <Button variant="default">Sign Up</Button>
-          </Link>
+          </SignUpButton>
         </SignedOut>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
