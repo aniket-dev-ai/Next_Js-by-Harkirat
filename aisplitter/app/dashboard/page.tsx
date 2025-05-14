@@ -42,10 +42,10 @@ const Dashboard = () => {
           Dashboard
         </h1>
         <Link href="/addexpense">
-        <Button className="flex gap-2 items-center w-full md:w-auto">
-          <PlusCircleIcon />
-          <span>Add Expense</span>
-        </Button>
+          <Button className="flex gap-2 items-center w-full md:w-auto">
+            <PlusCircleIcon />
+            <span>Add Expense</span>
+          </Button>
         </Link>
       </div>
 
@@ -117,13 +117,15 @@ const Dashboard = () => {
             <CardHeader>
               <div className="flex justify-between items-center mb-2">
                 <CardTitle>Your Group</CardTitle>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="text-sm flex gap-1"
-                >
-                  View All <ArrowRightFromLine size={16} />
-                </Button>
+                <Link href={"/contact"}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-sm flex gap-1"
+                  >
+                    View All <ArrowRightFromLine size={16} />
+                  </Button>
+                </Link>
               </div>
             </CardHeader>
             <CardContent className="pt-0">
