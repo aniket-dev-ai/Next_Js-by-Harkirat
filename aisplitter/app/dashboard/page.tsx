@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRightFromLine, PlusCircleIcon } from "lucide-react";
+import Link from "next/link";
 import FirstCardsRow from "./{components}/firstCardsRow";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -40,10 +41,12 @@ const Dashboard = () => {
         <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
           Dashboard
         </h1>
+        <Link href="/addexpense">
         <Button className="flex gap-2 items-center w-full md:w-auto">
           <PlusCircleIcon />
           <span>Add Expense</span>
         </Button>
+        </Link>
       </div>
 
       {/* Summary Cards */}
