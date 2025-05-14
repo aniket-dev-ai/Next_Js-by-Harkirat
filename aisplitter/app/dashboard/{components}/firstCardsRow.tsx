@@ -2,11 +2,22 @@ import React from "react";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-function FirstCardsRow({ cardrow1 }) {
+type CardRowItem = {
+  title: string;
+  amount: number | string;
+  desc: string;
+  textColor?: string;
+};
+
+interface FirstCardsRowProps {
+  cardrow1: CardRowItem[];
+}
+
+function FirstCardsRow({ cardrow1 }: FirstCardsRowProps) {
   return (
     <div>
       <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10 w-full">
-        {cardrow1.map((item, index) => (
+        {cardrow1.map((item: CardRowItem, index: number) => (
           <Card key={index} className="shadow-md flex flex-col h-full">
             <CardHeader>
               <CardTitle className="text-xl font-semibold">

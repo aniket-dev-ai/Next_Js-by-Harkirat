@@ -18,7 +18,9 @@ const NavBar = () => {
   return (
     <div className="flex items-center justify-between w-full px-6 py-4 border-b bg-background/80 backdrop-blur-md z-50 fixed top-0 left-0 right-0">
       {/* Logo */}
-      <Link href="/" className="text-xl font-bold text-primary">Ai Expense Splitter</Link>
+      <Link href="/" className="text-xl font-bold text-primary">
+        Ai Expense Splitter
+      </Link>
 
       {/* Desktop Nav */}
       <div className="hidden md:flex  gap-6">
@@ -43,8 +45,8 @@ const NavBar = () => {
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
           <Link href="/dashboard">
-            <Button  className="justify-start rounded-lg hover:bg-green-200 dark:hover:bg-green-900/60 transition ">
-              <span >DashBoard</span>
+            <Button className="justify-start rounded-lg hover:bg-green-200 dark:hover:bg-green-900/60 transition ">
+              <span>DashBoard</span>
             </Button>
           </Link>
         </SignedIn>
@@ -95,7 +97,9 @@ const NavBar = () => {
                 <SignedIn>
                   <div className="flex flex-col items-center gap-2 justify-center">
                     <UserButton afterSignOutUrl="/" />
-                    <Button className="">DashBoard</Button>
+                    <Link href="/dashboard">
+                      <Button className="">DashBoard</Button>
+                    </Link>
                   </div>
                 </SignedIn>
               </div>

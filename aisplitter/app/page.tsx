@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import HeroSection from "@/components/Landing/HeroSection";
 import FeatureSection from "@/components/Landing/FeatureSection";
 import WorkSection from "@/components/Landing/WorkSection";

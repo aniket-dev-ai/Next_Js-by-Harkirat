@@ -3,9 +3,9 @@
 "use client";
 
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
-const testimonials: Testimonial[] = [
+const testimonials= [
   {
     name: "Alice Johnson",
     role: "Product Manager",
